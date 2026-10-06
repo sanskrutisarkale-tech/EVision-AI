@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EV-FLOW</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>EV-FLOW: Fleet Charging Planner</h1>
+  <p class="note">Press a scenario button and watch the AI agents re-plan.</p>
+  <div id="errbox"></div>
+
+  <div class="scene" id="scene">
+    <div class="road"></div>
+    <span class="car c1">🚗</span>
+    <span class="car c2">🚙</span>
+    <span class="car c3">🚕</span>
+    <span class="station">🔌</span>
+  </div>
+
+  <div class="hub" id="hub">
+    <div class="brainWrap">
+      <div class="orbit"></div>
+      <div class="brainIcon">🧠</div>
+    </div>
+    <div class="hubText">
+      <b>AI Orchestrator</b>
+      <div id="hubStatus">Idle. Watching the fleet.</div>
+      <div class="dots"><i></i><i></i><i></i></div>
+    </div>
+  </div>
+
+  <div id="summary" class="cards"></div>
+  <div id="banner" class="banner"></div>
+
+  <div class="box">
+    <h2>AI agent pipeline</h2>
+    <div id="pipeline" class="pipe"></div>
+  </div>
+
+  <div class="box">
+    <h2>What-if scenarios</h2>
+    <button onclick="runEvent('price')">Night tariff jumps</button>
+    <button onclick="runEvent('charger')">Charger CH-1 fails</button>
+    <button onclick="runEvent('battery')">EV-05 battery drops to 12%</button>
+    <button onclick="runEvent('trip')">EV-03 emergency trip in 2 h</button>
+    <button onclick="runEvent('newev')">New EV arrives</button>
+    <button class="grey" onclick="resetAll()">Reset</button>
+  </div>
+
+  <div class="box">
+    <h2>Charging timeline (green = charging, amber = peak price, red = at risk)</h2>
+    <div style="overflow-x:auto" id="timeline"></div>
+  </div>
+
+  <div class="two2">
+    <div class="box">
+      <h2>Fleet readiness and cost</h2>
+      <div id="extras"></div>
+    </div>
+    <div class="box">
+      <h2>Charger bays (drag the slider)</h2>
+      <input type="range" id="hourSlider" min="16" max="39" value="16" oninput="drawBays()">
+      <div id="hourLabel"></div>
+      <div id="bays" class="bayRow"></div>
+    </div>
+  </div>
+
+  <div class="two">
+    <div class="box">
+      <h2>Charging plan (click a row for "Why?")</h2>
+      <div id="plan"></div>
+    </div>
+    <div>
+      <div class="box">
+        <h2>Agent activity</h2>
+        <div id="agents">No event yet.</div>
+      </div>
+      <div class="box">
+        <h2>Why this decision?</h2>
+        <div id="why">Click a vehicle in the plan.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <h2>Electricity price (Rs/kWh, hour 0 to 23)</h2>
+    <div id="priceChart" class="chart"></div>
+  </div>
+
+  <div class="box">
+    <h2>Fleet</h2>
+    <div id="fleet"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
